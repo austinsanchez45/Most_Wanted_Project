@@ -80,12 +80,17 @@ function searchByName(people){
   })
   // TODO: find the person single person object using the name they entered.
   console.log(foundPerson)
-  return foundPerson;
+  return foundPerson[0];
 }
 
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
 function searchByEyeColor(people){
-
+  let eyeColor = promptFor("What color eyes are we looking for?", autoValid);
+  let foundEyeColor = people.filter(function (potentialMatch) {
+    return potentialMatch.eyeColor === eyeColor;
+  })
+  console.log(foundEyeColor);
+  return foundEyeColor;
 }
 
 //TODO: add other trait filter functions here.
