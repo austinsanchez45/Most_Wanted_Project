@@ -79,6 +79,7 @@ function searchByName(people){
     }
   })
   // TODO: find the person single person object using the name they entered.
+  console.log(foundPerson)
   return foundPerson;
 }
 
@@ -88,6 +89,7 @@ function searchByEyeColor(people){
 }
 
 //TODO: add other trait filter functions here.
+
 
 
 
