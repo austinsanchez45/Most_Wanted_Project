@@ -43,7 +43,7 @@ function mainMenu(person, people){
     displayPerson(person);
     break;
     case "family":
-    // TODO: get person's family
+    displayFamily(person, people);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -166,6 +166,41 @@ function displayPerson(person){
   personInfo += "Occupation: " + person.occupation + "\n";
   personInfo += "Eye Color: " + person.eyeColor + "\n";
   alert(personInfo);
+}
+
+
+function displayFamily(person, people){
+  let sameLastName = people.filter(function(potentialMatch){
+    if(potentialMatch.lastName === person.lastName && potentialMatch.firstName != person.firstName){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  
+  let familyArray = []
+  for (let i = 0; i < sameLastName.length; i++){
+    if (sameLastName[i].id == person.currentSpouse){
+      familyArray.unshift(sameLastName[i].firstName + ' ' + sameLastName[i].lastName + ': Spouse');
+    }
+    else if (person.parents[0] == sameLastName[i].id ){
+      familyArray.unshift(sameLastName[i].firstName + ' ' + sameLastName[i].lastName + ': Parent');
+    }
+    else if (person.parents[1] == sameLastName[i].id ){
+      familyArray.unshift(sameLastName[i].firstName + ' ' + sameLastName[i].lastName + ': Parent');
+    }
+    else{
+      familyArray.unshift(sameLastName[i].firstName + ' ' + sameLastName[i].lastName + ': Sibling')
+    }
+  }
+
+  let displayFamilyString = ''
+  for (let i = 0; i < familyArray.length; i++){
+    displayFamilyString +=  familyArray[i] + '\n';
+  }
+
+  alert(displayFamilyString)
 }
 
 //#endregion
