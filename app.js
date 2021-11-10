@@ -94,7 +94,14 @@ function searchByEyeColor(people){
 
 //TODO: add other trait filter functions here.
 
-
+function searchByWeight(people) {
+  let pounds = promptFor("Input number of pounds", autoValid);
+  let foundPounds = people.filter(function (potentialMatch) {
+    return potentialMatch.weight == pounds;
+  })
+  console.log(foundPounds);
+  return foundPounds;
+}
 
 
 //#endregion
