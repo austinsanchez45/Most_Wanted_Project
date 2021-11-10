@@ -94,6 +94,16 @@ function searchByEyeColor(people){
 
 //TODO: add other trait filter functions here.
 
+function searchGender(people) {
+  let genderNeutrality = promptFor("You want male or female?", autoValid);
+  let foundGender = people.filter(function (potentialMatch) {
+    return potentialMatch.gender === genderNeutrality;
+  })
+  console.log(foundGender);
+  return foundGender;
+}
+
+
 function searchByWeight(people) {
   let pounds = promptFor("Input number of pounds", autoValid);
   let foundPounds = people.filter(function (potentialMatch) {
