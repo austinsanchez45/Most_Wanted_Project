@@ -103,6 +103,15 @@ function searchByWeight(people) {
   return foundPounds;
 }
 
+function searchByHeight(people) {
+  let cm = promptFor("Input number of centimeters", autoValid);
+  let foundHeight = people.filter(function (potentialMatch) {
+    return potentialMatch.height == cm;
+  })
+  console.log(foundHeight);
+  return foundHeight;
+}
+
 
 //#endregion
 
