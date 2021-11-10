@@ -1,5 +1,16 @@
 "use strict"
 
+const singleSearchTypes = [
+  "First name", "Last Name", "Gender", "Date of Birth", "Weight", "Height",
+  "Eye color", "Occupation",
+  "Multi",
+];
+
+const multiSearchTypes = [
+  "First name", "Last Name", "Gender", "Date of Birth", "Weight", "Height",
+  "Eye color", "Occupation",
+  "Exit"
+];
 
 //Menu functions.
 //Used for the overall flow of the application.
@@ -16,6 +27,19 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
+      let searchType = promptFor("Would you like to search by a single trait or multiple traits? Enter 'single' or 'multiple" + singleSearchTypes, singleSearchTypeValidator).toLowerCase()
+      console.log("search type: " + searchType);
+      switch (searchType) {
+        case 'multiple':
+          searchResults = multiSearch(people);
+          break;
+
+        default:
+          searchResults = search(searchType, people);
+          break;
+      }
+      console.log('found ' + searchResults.length + ' results.');
+      console.log('search results: ', searchResults);
       break;
       default:
     app(people); // restart app
