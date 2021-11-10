@@ -103,6 +103,15 @@ function searchGender(people) {
   return foundGender;
 }
 
+function searchByDoB(people) {
+  let dateOfBirth = promptFor("What date of birth are we looking for? dd/mm/yyyy format, if single digit no zeros", autoValid);
+  let foundDateOfBirth = people.filter(function (potentialMatch) {
+    return potentialMatch.dob === dateOfBirth;
+  })
+  console.log(foundDateOfBirth);
+  return foundDateOfBirth;
+}
+
 
 function searchByWeight(people) {
   let pounds = promptFor("Input number of pounds", autoValid);
@@ -114,9 +123,9 @@ function searchByWeight(people) {
 }
 
 function searchByHeight(people) {
-  let cm = promptFor("Input number of centimeters", autoValid);
+  let inch = promptFor("Input number of centimeters", autoValid);
   let foundHeight = people.filter(function (potentialMatch) {
-    return potentialMatch.height == cm;
+    return potentialMatch.height == inch;
   })
   console.log(foundHeight);
   return foundHeight;
