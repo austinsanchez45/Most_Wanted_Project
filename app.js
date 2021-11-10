@@ -131,6 +131,14 @@ function searchByHeight(people) {
   return foundHeight;
 }
 
+function searchByOccupation(people) {
+  let occupationSearch = promptFor("What occupation do you need?", autoValid);
+  let foundOccupation = people.filter(function (potentialMatch) {
+    return potentialMatch.occupation === occupationSearch;
+  })
+  console.log(foundOccupation);
+  return foundOccupation;
+}
 
 //#endregion
 
