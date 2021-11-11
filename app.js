@@ -142,7 +142,7 @@ function mainMenu(person, people){
     displayFamily(person, people);
     break;
     case "descendants":
-    // TODO: get person's descendants
+    displayDescendants(person, people);
     break;
     case "restart":
     app(people); // restart
@@ -330,6 +330,40 @@ function displayFamily(person, people){
   }
 
   alert(displayFamilyString);
+}
+
+function getChildren(person, people){
+  let children = people.filter(function(potentialMatch){
+    if(potentialMatch.parents[0] === person.id || potentialMatch.parents[1] === person.id ){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  return children;
+}
+function displayDescendants(person, people){
+  let childArray = []
+  childArray = getChildren(person, people);
+
+  let fullGrandChildArray = []
+  for (let i = 0; i < childArray.length; i++){
+    let grandChildArray = getChildren(childArray[i], people)
+    if (grandChildArray.length != 0){
+      fullGrandChildArray.push(grandChildArray);
+    }
+  }
+
+  let descendantString = '';
+  for (let i = 0; i < childArray.length; i++){
+    descendantString += (childArray[i].firstName + ' ' + childArray[i].lastName + ': Child\n');
+  }
+  for (let i = 0; i < fullGrandChildArray.length; i++){
+    descendantString += (fullGrandChildArray[i][i].firstName + ' ' + fullGrandChildArray[i][i].lastName + ': Grandchild\n');
+  }
+
+  alert(descendantString);
 }
 
 //#endregion
