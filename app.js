@@ -29,10 +29,10 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
-      let searchType = promptFor("Would you like to search by a single trait or multiple traits? Enter 'single' or 'multiple'").toLowerCase();
+      let searchType = promptFor('How do you want to search? ' + singleSearchTypes, singleSearchTypeValidator);
       console.log("search type: " + searchType);
       switch (searchType) {
-        case 'multiple':
+        case 'multi':
           searchResults = multiSearch(people);
           break;
 
