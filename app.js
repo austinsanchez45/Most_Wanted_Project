@@ -208,7 +208,7 @@ function searchByDoB(people) {
 
 
 function searchByWeight(people) {
-  let pounds = promptFor("Input number of pounds", autoValid);
+  let pounds = promptFor("Input weight in pounds", autoValid);
   let foundPounds = people.filter(function (potentialMatch) {
     return potentialMatch.weight == pounds;
   })
@@ -217,7 +217,7 @@ function searchByWeight(people) {
 }
 
 function searchByHeight(people) {
-  let inch = promptFor("Input number of inches", autoValid);
+  let inch = promptFor("Input height in inches", autoValid);
   let foundHeight = people.filter(function (potentialMatch) {
     return potentialMatch.height == inch;
   })
@@ -226,7 +226,7 @@ function searchByHeight(people) {
 }
 
 function searchByOccupation(people) {
-  let occupationSearch = promptFor("What occupation do you need?", autoValid);
+  let occupationSearch = promptFor("What occupation do they work?", autoValid);
   let foundOccupation = people.filter(function (potentialMatch) {
     return potentialMatch.occupation === occupationSearch;
   })
