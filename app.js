@@ -117,9 +117,13 @@ function displaySearchResults(searchResults){
     resultsString += (i + 1) + ': ' + searchResults[i].firstName + ' ' + searchResults[i].lastName + '\n';
   }
 
+  if(Array.isArray(searchResults) == true ){
   let option = prompt(resultsString + '\n' + 'Enter number for person on list: ')
-
   return searchResults[option-1];
+  }
+  else{
+    return searchResults;
+  }
 }
 
 // Menu function to call once you find who you are looking for
@@ -167,7 +171,7 @@ function searchByName(people){
   let lastName = promptFor("What is the person's last name?", autoValid);
 
   let foundPerson = people.filter(function(potentialMatch){
-    if(potentialMatch.firstName === firstName && potentialMatch.lastName === lastName){
+    if(potentialMatch.firstName.toLowerCase() === firstName && potentialMatch.lastName.toLowerCase() === lastName){
       return true;
     }
     else{
@@ -264,7 +268,7 @@ function displayPerson(person){
 
 function getPossibleSiblings(person, people){
 let possibleSiblings = people.filter(function(potentialMatch){
-    if(potentialMatch.parents[0] === person.parents[0] && potentialMatch.firstName != person.firstName && potentialMatch.parents.length != 0){
+    if(potentialMatch.parents[0] === person.parents[0] && potentialMatch.firstName.toLowerCase() != person.firstName && potentialMatch.parents.length != 0){
       return true;
     }
     else{
