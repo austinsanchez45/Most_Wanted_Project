@@ -29,10 +29,10 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
-      let searchType = promptFor("Would you like to search by a single trait or multiple traits? Enter 'single' or 'multiple'").toLowerCase();
+      let searchType = promptFor('How do you want to search? ' + singleSearchTypes, singleSearchTypeValidator);
       console.log("search type: " + searchType);
       switch (searchType) {
-        case 'multiple':
+        case 'multi':
           searchResults = multiSearch(people);
           break;
 
@@ -185,7 +185,7 @@ function searchByEyeColor(people){
     return potentialMatch.eyeColor === eyeColor;
   })
   console.log(foundEyeColor);
-  return foundEyeColor;
+  return foundEyeColor[0];
 }
 
 function searchGender(people) {
@@ -194,7 +194,7 @@ function searchGender(people) {
     return potentialMatch.gender === genderNeutrality;
   })
   console.log(foundGender);
-  return foundGender;
+  return foundGender[0];
 }
 
 function searchByDoB(people) {
@@ -203,7 +203,7 @@ function searchByDoB(people) {
     return potentialMatch.dob === dateOfBirth;
   })
   console.log(foundDateOfBirth);
-  return foundDateOfBirth;
+  return foundDateOfBirth[0];
 }
 
 
@@ -213,7 +213,7 @@ function searchByWeight(people) {
     return potentialMatch.weight == pounds;
   })
   console.log(foundPounds);
-  return foundPounds;
+  return foundPounds[0];
 }
 
 function searchByHeight(people) {
@@ -222,7 +222,7 @@ function searchByHeight(people) {
     return potentialMatch.height == inch;
   })
   console.log(foundHeight);
-  return foundHeight;
+  return foundHeight[0];
 }
 
 function searchByOccupation(people) {
@@ -231,7 +231,7 @@ function searchByOccupation(people) {
     return potentialMatch.occupation === occupationSearch;
   })
   console.log(foundOccupation);
-  return foundOccupation;
+  return foundOccupation[0];
 }
 
 //#endregion
@@ -253,10 +253,10 @@ function displayPerson(person){
   // height, weight, age, name, occupation, eye color.
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
+  personInfo += "Gender: " + person.gender + "\n";
   personInfo += "Height: " + person.height + "\n";
   personInfo += "Weight: " + person.weight + "\n";
-  personInfo += "DOB: " + person.dob + "\n";
+  personInfo += "DoB: " + person.dob + "\n";
   personInfo += "Occupation: " + person.occupation + "\n";
   personInfo += "Eye Color: " + person.eyeColor + "\n";
   alert(personInfo);
