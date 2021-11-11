@@ -83,13 +83,8 @@ function multiSearch(people) {
   if(searchType.includes(6)){
     filteredPeople = searchByOccupation(filteredPeople);
   }
-
-  if (searchType !== 1 || searchType !== 2 || searchType !== 3 || searchType !== 4 || searchType !== 5 || searchType !== 6){
-    multiSearch(people);
-  }
-
-  displayPeople(filteredPeople);
-  return
+  
+  return filteredPeople;
 }
 
 function search(searchType, people) {
