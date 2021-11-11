@@ -1,4 +1,6 @@
 "use strict"
+let isValid = false;
+let targetPerson = "";
 
 const singleSearchTypes = [
   "First name", "Last Name", "Gender", "Date of Birth", "Weight", "Height",
@@ -27,7 +29,7 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
-      let searchType = promptFor("Would you like to search by a single trait or multiple traits? Enter 'single' or 'multiple" + singleSearchTypes, singleSearchTypeValidator).toLowerCase()
+      let searchType = promptFor("Would you like to search by a single trait or multiple traits? Enter 'single' or 'multiple'").toLowerCase();
       console.log("search type: " + searchType);
       switch (searchType) {
         case 'multiple':
@@ -49,6 +51,76 @@ function app(people){
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }
+
+function multiSearch(people) {
+  console.log("Beginning multi-search");
+
+  let filteredPeople = people;
+  for (let i = 0; i < 5; i++) {
+    let searchType = promptFor('Multi-search: Pick criteria ' + i + ' of 5(max): '
+      + multiSearchTypes, multiSearchTypeValidator)
+
+    console.log(searchType)
+    switch (searchType) {
+      case "exit":
+        console.log("Here are the results of your search.");
+        return filteredPeople;
+
+      default:
+        filteredPeople = search(searchType, people);
+    }
+
+    if (filteredPeople.length === 0) {
+      alert("No results found, try again.");
+      multiSearch(people);
+    }
+    console.log("Current filtered people: ", filteredPeople);
+    return filteredPeople;
+  }
+  if(searchResults.length === 1) {
+  mainMenu(searchResults, people);
+  }
+  else if(searchResults.length > 1) {
+    for (let i = 0; i < searchResults.length; ++i) {
+      alert("Option: " + i + "\n " + searchResults[i].firstName + " " + searchResults[i].lastName + "\n DoB: "
+        + searchResults[i].dob + "\nGender: " + searchResults[i].gender + "\nEye Color: " + searchResults[i].eyeColor );
+    }
+    let selectPersonFromConsole = promptFor('There are ' + searchResults.length
+      + ' entries found. \n Please select 0 - ' + (searchResults.length - 1) + " to continue" , autoValid)
+    while(selectPersonFromConsole < 0 || selectPersonFromConsole > searchResults.length){
+      selectPersonFromConsole = promptFor('Please select a number 0 - ' + searchResults.length, autoValid)
+    }
+    mainMenu(searchResults, people, selectPersonFromConsole);
+  }
+  else{
+    alert('No search results found');
+  }
+}
+
+function search(searchType, people) {
+  switch (searchType) {
+    case "first name":
+      return searchByFirstName(people);
+    case "last name":
+      return searchByLastName(people);
+    case "weight":
+      return searchByWeight(people);
+    case "height":
+      return searchByHeight(people);
+    case "gender":
+      return searchGender(people);
+    case "date of birth":
+      return searchByDoB(people);
+    case "eye color":
+      return searchByEyeColor(people);
+    case "occupation":
+      return searchByOccupation(people);
+    default:
+      console.log('Search type [' + searchType + '] not found');
+      return people;
+  }
+}
+
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
@@ -230,8 +302,16 @@ function autoValid(input){
 
 //Unfinished validation function you can use for any of your custom validation callbacks.
 //can be used for things like eye color validation for example.
-function customValidation(input){
-  
+function singleSearchTypeValidator(input) {
+  input = input.toLowerCase()
+  return input === "first name" || input === "last name" || input === "gender" || input === "date of birth"
+    || input === "height" || input === "weight" || input === "eye color" || input === "occupation" || input === "multi";
+}
+
+function multiSearchTypeValidator(input) {
+  input = input.toLowerCase()
+  return input === "first name" || input === "last name" || input === "gender" || input === "date of birth"
+    || input === "height" || input === "weight" || input === "eye color" || input === "occupation" || input === "exit";
 }
 
 //#endregion
