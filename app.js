@@ -103,7 +103,7 @@ function search(searchType, people) {
     case "height":
       return searchByHeight(people);
     case "gender":
-      return searchGender(people);
+      return searchByGender(people);
     case "date of birth":
       return searchByDoB(people);
     case "eye color":
