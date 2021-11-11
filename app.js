@@ -3,15 +3,14 @@ let isValid = false;
 let targetPerson = "";
 
 const singleSearchTypes = [
-  "First name", "Last Name", "Gender", "Date of Birth", "Weight", "Height",
-  "Eye color", "Occupation",
-  "Multi",
+  "Gender", " Date of Birth", " Weight", " Height ",
+  " Eye color", " Occupation",
+  " Multi",
 ];
 
 const multiSearchTypes = [
-  "First name", "Last Name", "Gender", "Date of Birth", "Weight", "Height",
-  "Eye color", "Occupation",
-  "Exit"
+  "1: Gender", " 2: Date of Birth", " 3: Weight", " 4: Height",
+  " 5: Eye color", " 6: Occupation",
 ];
 
 //Menu functions.
@@ -54,47 +53,42 @@ function app(people){
 
 function multiSearch(people) {
   console.log("Beginning multi-search");
+  let searchType = promptFor('Multi-search: Pick criteria you want to search (input numbers separated by a comma): '
+  + '\n' + multiSearchTypes, autoValid);
 
-  let filteredPeople = people;
-  for (let i = 0; i < 5; i++) {
-    let searchType = promptFor('Multi-search: Pick criteria ' + i + ' of 5(max): '
-      + multiSearchTypes, multiSearchTypeValidator)
+  let filteredPeople = people; 
+  searchType.split(',');
 
-    console.log(searchType)
-    switch (searchType) {
-      case "exit":
-        console.log("Here are the results of your search.");
-        return filteredPeople;
+  if(searchType.includes(1)){
+    filteredPeople = searchByGender(filteredPeople);
+  }
 
-      default:
-        filteredPeople = search(searchType, people);
-    }
+  if(searchType.includes(2)){
+    filteredPeople = searchByDoB(filteredPeople);
+  }
 
-    if (filteredPeople.length === 0) {
-      alert("No results found, try again.");
-      multiSearch(people);
-    }
-    console.log("Current filtered people: ", filteredPeople);
-    return filteredPeople;
+  if(searchType.includes(3)){
+    filteredPeople = searchByWeight(filteredPeople);
   }
-  if(searchResults.length === 1) {
-  mainMenu(searchResults, people);
+
+  if(searchType.includes(4)){
+    filteredPeople = searchByHeight(filteredPeople);
   }
-  else if(searchResults.length > 1) {
-    for (let i = 0; i < searchResults.length; ++i) {
-      alert("Option: " + i + "\n " + searchResults[i].firstName + " " + searchResults[i].lastName + "\n DoB: "
-        + searchResults[i].dob + "\nGender: " + searchResults[i].gender + "\nEye Color: " + searchResults[i].eyeColor );
-    }
-    let selectPersonFromConsole = promptFor('There are ' + searchResults.length
-      + ' entries found. \n Please select 0 - ' + (searchResults.length - 1) + " to continue" , autoValid)
-    while(selectPersonFromConsole < 0 || selectPersonFromConsole > searchResults.length){
-      selectPersonFromConsole = promptFor('Please select a number 0 - ' + searchResults.length, autoValid)
-    }
-    mainMenu(searchResults, people, selectPersonFromConsole);
+
+  if(searchType.includes(5)){
+    filteredPeople = searchByEyeColor(filteredPeople);
   }
-  else{
-    alert('No search results found');
+
+  if(searchType.includes(6)){
+    filteredPeople = searchByOccupation(filteredPeople);
   }
+
+  if (searchType !== 1 || searchType !== 2 || searchType !== 3 || searchType !== 4 || searchType !== 5 || searchType !== 6){
+    multiSearch(people);
+  }
+
+  displayPeople(filteredPeople);
+  return
 }
 
 function search(searchType, people) {
@@ -185,16 +179,16 @@ function searchByEyeColor(people){
     return potentialMatch.eyeColor === eyeColor;
   })
   console.log(foundEyeColor);
-  return foundEyeColor[0];
+  return foundEyeColor;
 }
 
-function searchGender(people) {
-  let genderNeutrality = promptFor("You want male or female?", autoValid);
+function searchByGender(people) {
+  let genderNeutrality = promptFor("What is the person's gender?", autoValid);
   let foundGender = people.filter(function (potentialMatch) {
     return potentialMatch.gender === genderNeutrality;
   })
   console.log(foundGender);
-  return foundGender[0];
+  return foundGender;
 }
 
 function searchByDoB(people) {
@@ -203,7 +197,7 @@ function searchByDoB(people) {
     return potentialMatch.dob === dateOfBirth;
   })
   console.log(foundDateOfBirth);
-  return foundDateOfBirth[0];
+  return foundDateOfBirth;
 }
 
 
@@ -213,7 +207,7 @@ function searchByWeight(people) {
     return potentialMatch.weight == pounds;
   })
   console.log(foundPounds);
-  return foundPounds[0];
+  return foundPounds;
 }
 
 function searchByHeight(people) {
@@ -222,7 +216,7 @@ function searchByHeight(people) {
     return potentialMatch.height == inch;
   })
   console.log(foundHeight);
-  return foundHeight[0];
+  return foundHeight;
 }
 
 function searchByOccupation(people) {
@@ -231,7 +225,7 @@ function searchByOccupation(people) {
     return potentialMatch.occupation === occupationSearch;
   })
   console.log(foundOccupation);
-  return foundOccupation[0];
+  return foundOccupation;
 }
 
 //#endregion
