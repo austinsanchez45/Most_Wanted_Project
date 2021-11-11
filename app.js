@@ -139,7 +139,7 @@ function mainMenu(person, people){
     displayPerson(person);
     break;
     case "family":
-    // TODO: get person's family
+    displayFamily(person, people);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -260,6 +260,76 @@ function displayPerson(person){
   personInfo += "Occupation: " + person.occupation + "\n";
   personInfo += "Eye Color: " + person.eyeColor + "\n";
   alert(personInfo);
+}
+
+
+function displayFamily(person, people){
+  let familyArray = []
+  if (person.currentSpouse != null){
+    for (let i = 0; i < people.length; i++){
+      if (person.currentSpouse == people[i].id){
+        familyArray.unshift(people[i].firstName + ' ' + people[i].lastName + ': Spouse');
+      }
+    }
+  }
+
+  if (person.parents[0] != []){
+    for (let i = 0; i < people.length; i++){
+      if (person.parents[0] == people[i].id){
+        familyArray.unshift(people[i].firstName + ' ' + people[i].lastName + ': Parent');
+      }
+    }
+  }
+
+  if (person.parents[1] != []){
+    for (let i = 0; i < people.length; i++){
+      if (person.parents[1] == people[i].id){
+        familyArray.unshift(people[i].firstName + ' ' + people[i].lastName + ': Parent');
+      }
+    }
+  }
+
+  let possibleSiblings = people.filter(function(potentialMatch){
+    if(potentialMatch.lastName === person.lastName && potentialMatch.firstName != person.firstName){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+
+  for (let i = 0; i < possibleSiblings.length; i++){
+    if (person.currentSpouse == possibleSiblings[i].id){
+      delete possibleSiblings[i];
+    }
+    else if (person.parents[0] == possibleSiblings[i].id){
+      delete possibleSiblings[i];
+    }
+    else if (person.parents[1] == possibleSiblings[i].id){
+      delete possibleSiblings[i];
+    }
+  }
+
+  possibleSiblings = possibleSiblings.filter(el=>el);
+
+  for (let i = 0; i < possibleSiblings.length; i++){
+    if (possibleSiblings[i].parents[0] == person.id || possibleSiblings[i].parents[1] == person.id){
+    delete possibleSiblings[i];
+    }
+  }
+
+  possibleSiblings = possibleSiblings.filter(el=>el);
+  
+  for (let i = 0; i < possibleSiblings.length; i++){
+    familyArray.unshift(possibleSiblings[i].firstName + ' ' + possibleSiblings[i].lastName + ': Siblings');
+  }
+
+  let displayFamilyString = ''
+  for (let i = 0; i < familyArray.length; i++){
+    displayFamilyString +=  familyArray[i] + '\n';
+  }
+
+  alert(displayFamilyString);
 }
 
 //#endregion
