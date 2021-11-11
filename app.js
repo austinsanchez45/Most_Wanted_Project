@@ -47,6 +47,7 @@ function app(people){
       break;
   }
   
+  searchResults = displaySearchResults(searchResults);
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }
@@ -115,6 +116,16 @@ function search(searchType, people) {
   }
 }
 
+function displaySearchResults(searchResults){
+  let resultsString = ''
+  for(let i = 0; i < searchResults.length; i++){
+    resultsString += (i + 1) + ': ' + searchResults[i].firstName + ' ' + searchResults[i].lastName + '\n';
+  }
+
+  let option = prompt(resultsString + '\n' + 'Enter number for person on list: ')
+
+  return searchResults[option-1];
+}
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
