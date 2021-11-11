@@ -262,6 +262,18 @@ function displayPerson(person){
   alert(personInfo);
 }
 
+function getPossibleSiblings(person, people){
+let possibleSiblings = people.filter(function(potentialMatch){
+    if(potentialMatch.parents[0] === person.parents[0] && potentialMatch.firstName != person.firstName && potentialMatch.parents.length != 0){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+
+  return possibleSiblings;
+}
 
 function displayFamily(person, people){
   let familyArray = []
@@ -289,39 +301,12 @@ function displayFamily(person, people){
     }
   }
 
-  let possibleSiblings = people.filter(function(potentialMatch){
-    if(potentialMatch.lastName === person.lastName && potentialMatch.firstName != person.firstName){
-      return true;
-    }
-    else{
-      return false;
-    }
-  })
-
-  for (let i = 0; i < possibleSiblings.length; i++){
-    if (person.currentSpouse == possibleSiblings[i].id){
-      delete possibleSiblings[i];
-    }
-    else if (person.parents[0] == possibleSiblings[i].id){
-      delete possibleSiblings[i];
-    }
-    else if (person.parents[1] == possibleSiblings[i].id){
-      delete possibleSiblings[i];
-    }
-  }
-
-  possibleSiblings = possibleSiblings.filter(el=>el);
-
-  for (let i = 0; i < possibleSiblings.length; i++){
-    if (possibleSiblings[i].parents[0] == person.id || possibleSiblings[i].parents[1] == person.id){
-    delete possibleSiblings[i];
-    }
-  }
-
-  possibleSiblings = possibleSiblings.filter(el=>el);
+  let possibleSiblings = getPossibleSiblings(person, people);
   
-  for (let i = 0; i < possibleSiblings.length; i++){
-    familyArray.unshift(possibleSiblings[i].firstName + ' ' + possibleSiblings[i].lastName + ': Siblings');
+  if(possibleSiblings.length > 0){
+    for (let i = 0; i < possibleSiblings.length; i++){
+      familyArray.unshift(possibleSiblings[i].firstName + ' ' + possibleSiblings[i].lastName + ': Siblings');
+    }
   }
 
   let displayFamilyString = ''
@@ -329,7 +314,12 @@ function displayFamily(person, people){
     displayFamilyString +=  familyArray[i] + '\n';
   }
 
+  if (displayFamilyString == ''){
+    alert('No immediate family found.')
+  }
+  else{
   alert(displayFamilyString);
+  }
 }
 
 function getChildren(person, people){
@@ -343,10 +333,8 @@ function getChildren(person, people){
   })
   return children;
 }
-function displayDescendants(person, people){
-  let childArray = []
-  childArray = getChildren(person, people);
 
+function getGrandChildren(childArray,people){
   let fullGrandChildArray = []
   for (let i = 0; i < childArray.length; i++){
     let grandChildArray = getChildren(childArray[i], people)
@@ -354,6 +342,15 @@ function displayDescendants(person, people){
       fullGrandChildArray.push(grandChildArray);
     }
   }
+  return fullGrandChildArray;
+}
+
+function displayDescendants(person, people){
+  let childArray = []
+  childArray = getChildren(person, people);
+
+  let fullGrandChildArray = []
+  fullGrandChildArray = getGrandChildren(childArray,people);
 
   let descendantString = '';
   for (let i = 0; i < childArray.length; i++){
