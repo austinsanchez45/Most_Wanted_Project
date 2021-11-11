@@ -360,7 +360,12 @@ function displayDescendants(person, people){
     descendantString += (fullGrandChildArray[i][i].firstName + ' ' + fullGrandChildArray[i][i].lastName + ': Grandchild\n');
   }
 
-  alert(descendantString);
+  if (descendantString == ''){
+    alert('No descendants found.')
+  }
+  else{
+    alert(descendantString);
+  }
 }
 
 //#endregion
