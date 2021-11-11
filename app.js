@@ -28,7 +28,7 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
-      let searchType = promptFor('How do you want to search? ' + singleSearchTypes, singleSearchTypeValidator);
+      let searchType = promptFor('How do you want to search? ' + singleSearchTypes, autoValid);
       console.log("search type: " + searchType);
       switch (searchType) {
         case 'multi':
@@ -387,7 +387,7 @@ function promptFor(question, valid){
     var response = prompt(question).trim();
     isValid = valid(response);
   } while(response === ""  ||  isValid === false)
-  return response;
+  return response.toLowerCase();
 }
 
 // helper function/callback to pass into promptFor to validate yes/no answers.
@@ -408,16 +408,5 @@ function autoValid(input){
 
 //Unfinished validation function you can use for any of your custom validation callbacks.
 //can be used for things like eye color validation for example.
-function singleSearchTypeValidator(input) {
-  input = input.toLowerCase()
-  return input === "first name" || input === "last name" || input === "gender" || input === "date of birth"
-    || input === "height" || input === "weight" || input === "eye color" || input === "occupation" || input === "multi";
-}
-
-function multiSearchTypeValidator(input) {
-  input = input.toLowerCase()
-  return input === "first name" || input === "last name" || input === "gender" || input === "date of birth"
-    || input === "height" || input === "weight" || input === "eye color" || input === "occupation" || input === "exit";
-}
 
 //#endregion
